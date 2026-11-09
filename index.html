@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>오토노머스에이투지 | A2Z 가로세로 낱말퀴즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-2ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-3Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-4Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-6SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-7Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-8ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'A2z';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2601-6@1.0/에이투지체-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-display: swap;
+}
+
+  :root{
+    --mint:#00FFDC;
+    --teal:#00BEB7;
+    --page-bg:#EEF7F6;
+    --paper:#FFFFFF;
+    --ink:#101A19;
+    --sub:#66746F;
+    --line:#C9E3E0;
+    --good:#00BEB7;
+    --bad:#FF4D4D;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--page-bg);
+    font-family:'A2z',sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .app{
+    width:100%;
+    max-width:460px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--paper);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:relative;
+    background:radial-gradient(120% 140% at 50% -20%, #E4FBF8 0%, #FFFFFF 60%);
+    padding:30px 24px 46px;
+    overflow:hidden;
+    isolation:isolate;
+    text-align:center;
+    border-bottom:2px solid var(--line);
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:conic-gradient(from 0deg, transparent 0deg, rgba(0,255,220,0.28) 8deg, transparent 30deg, transparent 360deg);
+    animation:sweep 7s linear infinite;
+    z-index:-1;
+  }
+  .logo{
+    display:block;
+    height:34px;
+    width:auto;
+    margin:0 auto 24px;
+  }
+  @keyframes sweep{ to{ transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ header::before{ animation:none; } }
+
+  .eyebrow{
+    font-family:'A2z',monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    color:var(--ink);
+    background:linear-gradient(90deg, var(--mint), var(--teal));
+    border:none;
+    display:table;
+    margin:0 auto;
+    padding:5px 12px;
+    border-radius:999px;
+    font-weight:700;
+  }
+  h2{
+    font-family:'A2z', sans-serif;
+    color:var(--ink);
+    margin:12px 0 0;
+    font-size:18px;
+    line-height:1.15;
+    font-weight:700 !important;
+  }
+  header p{
+    color:var(--sub);
+    font-size:13px;
+    margin:8px 0 0;
+  }
+
+  /* ---------- Main card ---------- */
+  main{
+    position:relative;
+    background:var(--paper);
+    padding:20px 20px 20px;
+  }
+  .instructions{
+    font-size:12.5px;
+    color:var(--sub);
+    text-align:center;
+    margin:0 0 14px;
+  }
+
+  /* ---------- Grid ---------- */
+  .grid-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom:36px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(5, clamp(48px,13vw,60px));
+    grid-auto-rows:clamp(48px,13vw,60px);
+    gap:5px;
+  }
+  .cell{
+    position:relative;
+    border-radius:8px;
+  }
+  .cell.filler{
+    background:rgba(0,190,183,0.16);
+    border:1.5px solid rgba(0,190,183,0.55);
+  }
+  .cell.active input{
+    width:100%;
+    height:100%;
+    border:2px solid rgba(0,190,183,0.55);
+    border-radius:8px;
+    background:#fff;
+    text-align:center;
+    font-family:'A2z',monospace;
+    font-weight:700;
+    font-size:clamp(18px,5vw,22px);
+    color:var(--ink);
+    outline:none;
+    padding:0;
+    caret-color:var(--teal);
+    transition:border-color .15s, background .15s, transform .12s;
+  }
+  .cell.active input:focus{
+    border-color:var(--teal);
+    box-shadow:0 0 0 3px rgba(0,190,183,0.15);
+  }
+  .cell.active input.correct{
+    border-color:var(--good);
+    background:#E3FBF8;
+    color:#00807A;
+  }
+  .cell.active input.wrong{
+    border-color:var(--bad);
+    background:#FFE9E9;
+    animation:shake .28s;
+  }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-4px);}
+    75%{transform:translateX(4px);}
+  }
+  .badge{
+    position:absolute;
+    top:-6px;
+    left:-6px;
+    min-width:19px;
+    height:19px;
+    padding:0 3px;
+    border-radius:50%;
+    font-family:'A2z',monospace;
+    font-size:10px;
+    font-weight:700;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2;
+    box-shadow:0 0 0 2px var(--paper);
+  }
+  .badge.across{ background:var(--mint); color:var(--ink); }
+  .badge.down{ background:var(--teal); color:#fff; }
+
+  /* ---------- Clue panels ---------- */
+  .clues{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .panel{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .panel-tab{
+    font-family:'A2z', monospace;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    color:#fff;
+    padding:7px 12px;
+  }
+  .panel.across .panel-tab{ background:var(--mint); color:var(--ink); }
+  .panel.down .panel-tab{ background:var(--teal); color:#fff; }
+  .clue-item{
+    display:flex;
+    gap:10px;
+    padding:9px 12px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    line-height:1.4;
+    align-items:flex-start;
+    min-width:0;
+  }
+  .clue-item > span:not(.clue-num):not(.clue-status){
+    min-width:0;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+  .clue-item:first-of-type{ border-top:none; }
+  .clue-num{
+    flex:none;
+    font-family:'A2z', monospace;
+    font-weight:700;
+    font-size:11.5px;
+    color:var(--sub);
+    min-width:16px;
+  }
+  .clue-status{
+    flex:none;
+    font-size:13px;
+    margin-left:auto;
+    padding-left:6px;
+  }
+  .clue-status.ok{ color:var(--good); }
+  .clue-status.no{ color:var(--bad); }
+
+  /* ---------- Submit bar ---------- */
+  .action-bar{
+    position:sticky;
+    bottom:0;
+    left:0;
+    right:0;
+    padding:8px 20px calc(10px + env(safe-area-inset-bottom));
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    align-items:center;
+  }
+  .result-line{
+    font-size:12px;
+    color:var(--sub);
+    text-align:center;
+    min-height:14px;
+  }
+  .btn-row{
+    display:flex;
+    gap:8px;
+    width:100%;
+  }
+  button.primary{
+    flex:1;
+    background:var(--teal);
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:13px 0;
+    font-family:'A2z', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    transition:transform .1s;
+  }
+  button.primary:active{ transform:scale(.98); }
+  button.ghost{
+    flex:none;
+    background:transparent;
+    color:var(--sub);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:13px 16px;
+    font-family:'A2z', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+  }
+
+  /* ---------- Complete screen ---------- */
+  .complete{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    height:100dvh;
+    background:radial-gradient(120% 140% at 50% -10%, #E4FBF8 0%, #FFFFFF 60%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s ease;
+    z-index:10;
+  }
+  .complete.show{ opacity:1; pointer-events:auto; }
+  .complete-card{
+    max-width:380px;
+    width:100%;
+    margin:auto;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .check{
+    width:66px;height:66px;
+    margin:0 auto 20px;
+    border-radius:50%;
+    background:rgba(0,190,183,0.12);
+    border:1.5px solid var(--teal);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .complete h3{
+    font-family:'A2z', sans-serif;
+    color:var(--ink);
+    font-size:26px;
+    margin:0 0 10px;
+    text-align:center;
+    width:100%;
+  }
+  .complete p{
+    color:var(--sub);
+    font-size:14px;
+    line-height:1.6;
+    margin:0 0 26px;
+    text-align:center;
+    width:100%;
+  }
+  .complete button{
+    background:var(--teal);
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    padding:13px 32px;
+    font-family:'A2z', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+  }
+
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <header>
+    <img class="logo" src="https://cdn.imweb.me/thumbnail/20260129/f3a3f47a528e3.png" alt="Autonomous A2Z Logo">
+    <span class="eyebrow">EXHIBITION QUIZ</span>
+    <h2>A2Z 가로세로 낱말퀴즈</h2>
+    <p>낱말로 맞혀보는 A2Z의 이야기</p>
+  </header>
+
+  <main>
+    <p class="instructions">모든 정답은 한글로 입력해 주세요.<br>칸을 모두 채운 뒤 아래 '제출하기'를 눌러주세요.</p>
+
+    <div class="grid-wrap">
+      <div class="grid" id="grid"></div>
+    </div>
+
+    <div class="clues">
+      <div class="panel across">
+        <div class="panel-tab">가로</div>
+        <div id="across-list"></div>
+      </div>
+      <div class="panel down">
+        <div class="panel-tab">세로</div>
+        <div id="down-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="action-bar">
+    <div class="result-line" id="resultLine"></div>
+    <div class="btn-row">
+      <button class="ghost" id="resetBtn">다시 풀기</button>
+      <button class="primary" id="submitBtn">제출하기</button>
+    </div>
+  </div>
+
+  <div class="complete" id="completeScreen">
+    <div class="complete-card">
+      <div class="check">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#00BEB7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>낱말퀴즈 완성!</h3>
+      <p>A2Z 가로세로 낱말퀴즈를 모두 맞히셨어요.<br>스태프에게 이 화면을 보여주고<br>이벤트에 참여해보세요! 🎁</p>
+      <button id="restartBtn">처음으로</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Puzzle data ---------- */
+const words = [
+  { key:'d1', dir:'down',    num:1, label:'세로 1', answers:[['로','이']],
+    clue:'오토노머스에이투지가 개발한 대표적인 자율주행 레벨4 차량의 이름은 무엇일까요?',
+    cells:[[0,1],[1,1]] },
+  { key:'a1', dir:'across',  num:1, label:'가로 1', answers:[['에','이','투','지','체']],
+    clue:'오토노머스에이투지의 전용 서체 이름은 무엇일까요?',
+    cells:[[1,0],[1,1],[1,2],[1,3],[1,4]] },
+  { key:'a2', dir:'across',  num:2, label:'가로 2', answers:[['청','계','천']],
+    clue:'국내 최초 \'운전석 없는 자율주행셔틀\'이 도입된 서울의 대표적인 명소는 어디일까요?',
+    cells:[[3,0],[3,1],[3,2]] },
+  { key:'a3', dir:'across',  num:3, label:'가로 3', answers:[['도','쿠','시','마'],['토','쿠','시','마']],
+    clue:'오토노머스에이투지가 자율주행 택시 실증 사업을 진행하고 있는 일본의 지역(현) 이름은 무엇일까요?',
+    cells:[[5,0],[5,1],[5,2],[5,3]] },
+];
+
+const ROWS = 6, COLS = 5;
+
+/* build active-cell map: "r-c" -> array of {wordKey, idx} */
+const cellMap = {};
+words.forEach(w=>{
+  w.cells.forEach(([r,c], idx)=>{
+    const k = r+'-'+c;
+    if(!cellMap[k]) cellMap[k] = [];
+    cellMap[k].push({wordKey:w.key, idx});
+  });
+});
+
+/* badge map: first cell of each word -> badge info */
+const badgeMap = {};
+words.forEach(w=>{
+  const [r,c] = w.cells[0];
+  const k = r+'-'+c;
+  if(!badgeMap[k]) badgeMap[k] = [];
+  badgeMap[k].push({num:w.num, dir:w.dir});
+});
+
+/* ---------- Render grid ---------- */
+const gridEl = document.getElementById('grid');
+gridEl.style.gridTemplateRows = `repeat(${ROWS}, clamp(48px,13vw,60px))`;
+
+const activeOrder = []; // row-major list of active cell keys, for fallback focus
+
+for(let r=0; r<ROWS; r++){
+  for(let c=0; c<COLS; c++){
+    const k = r+'-'+c;
+    const cellDiv = document.createElement('div');
+    if(cellMap[k]){
+      cellDiv.className = 'cell active';
+      const input = document.createElement('input');
+      input.setAttribute('type','text');
+      input.setAttribute('inputmode','text');
+      input.setAttribute('autocomplete','off');
+      input.setAttribute('autocapitalize','off');
+      input.setAttribute('autocorrect','off');
+      input.setAttribute('spellcheck','false');
+      input.dataset.key = k;
+      cellDiv.appendChild(input);
+      activeOrder.push(k);
+
+      if(badgeMap[k]){
+        badgeMap[k].forEach(b=>{
+          const badge = document.createElement('span');
+          badge.className = 'badge ' + b.dir;
+          badge.textContent = b.num;
+          cellDiv.appendChild(badge);
+        });
+      }
+    } else {
+      cellDiv.className = 'cell filler';
+    }
+    gridEl.appendChild(cellDiv);
+  }
+}
+
+/* ---------- Render clue lists ---------- */
+const acrossListEl = document.getElementById('across-list');
+const downListEl = document.getElementById('down-list');
+
+words.forEach(w=>{
+  const item = document.createElement('div');
+  item.className = 'clue-item';
+  item.id = 'clue-' + w.key;
+  item.innerHTML = `<span class="clue-num">${w.num}</span><span>${w.clue}</span><span class="clue-status" id="status-${w.key}"></span>`;
+  if(w.dir === 'across') acrossListEl.appendChild(item);
+  else downListEl.appendChild(item);
+});
+
+/* ---------- Input navigation (IME-safe for Korean) ---------- */
+function getInput(k){ return gridEl.querySelector(`input[data-key="${k}"]`); }
+
+function keyOf(r,c){ return r+'-'+c; }
+
+function focusNext(currentKey){
+  const entries = cellMap[currentKey];
+  if(entries && entries.length){
+    const w = words.find(x=>x.key===entries[0].wordKey);
+    const idx = entries[0].idx;
+    if(idx < w.cells.length - 1){
+      const [nr,nc] = w.cells[idx+1];
+      const el = getInput(keyOf(nr,nc));
+      if(el){ el.focus(); return; }
+    }
+  }
+  const pos = activeOrder.indexOf(currentKey);
+  if(pos >= 0 && pos < activeOrder.length - 1){
+    const el = getInput(activeOrder[pos+1]);
+    if(el) el.focus();
+  }
+}
+
+function focusPrev(currentKey){
+  const entries = cellMap[currentKey];
+  if(entries && entries.length){
+    const w = words.find(x=>x.key===entries[0].wordKey);
+    const idx = entries[0].idx;
+    if(idx > 0){
+      const [pr,pc] = w.cells[idx-1];
+      const el = getInput(keyOf(pr,pc));
+      if(el){ el.focus(); return; }
+    }
+  }
+  const pos = activeOrder.indexOf(currentKey);
+  if(pos > 0){
+    const el = getInput(activeOrder[pos-1]);
+    if(el) el.focus();
+  }
+}
+
+function lastChar(str){
+  const arr = Array.from(str || '');
+  return arr.length ? arr[arr.length-1] : '';
+}
+
+let advanceTimer = null;
+const ADVANCE_DELAY = 1000;
+
+function finalizeCell(input){
+  if(input.dataset.finalized === '1') return;
+  input.dataset.finalized = '1';
+  const ch = lastChar(input.value);
+  input.value = ch;
+  input.classList.remove('correct','wrong');
+  if(ch) focusNext(input.dataset.key);
+}
+
+gridEl.addEventListener('input', (e)=>{
+  const input = e.target;
+  if(input.tagName !== 'INPUT') return;
+  input.dataset.finalized = '';
+  input.classList.remove('correct','wrong');
+  clearTimeout(advanceTimer);
+  advanceTimer = setTimeout(()=> finalizeCell(input), ADVANCE_DELAY);
+});
+
+gridEl.addEventListener('compositionend', (e)=>{
+  const input = e.target;
+  if(input.tagName !== 'INPUT') return;
+  clearTimeout(advanceTimer);
+  finalizeCell(input);
+});
+
+gridEl.addEventListener('keydown', (e)=>{
+  const input = e.target;
+  if(input.tagName !== 'INPUT') return;
+  if(e.key === 'Backspace' && input.value === ''){
+    clearTimeout(advanceTimer);
+    focusPrev(input.dataset.key);
+  }
+});
+
+/* ---------- Submit / check ---------- */
+const resultLine = document.getElementById('resultLine');
+
+function checkAnswers(){
+  let correctWords = 0;
+  words.forEach(w=>{
+    const entered = w.cells.map(([r,c]) => (getInput(keyOf(r,c)).value || '').trim());
+    const wordCorrect = w.answers.some(ans => ans.every((ch,i)=> entered[i] === ch));
+
+    let bestAns = w.answers[0], bestScore = -1;
+    w.answers.forEach(ans=>{
+      let score = 0;
+      ans.forEach((ch,i)=>{ if(entered[i] === ch) score++; });
+      if(score > bestScore){ bestScore = score; bestAns = ans; }
+    });
+
+    w.cells.forEach(([r,c], idx)=>{
+      const el = getInput(keyOf(r,c));
+      const isRight = entered[idx] === bestAns[idx];
+      el.classList.remove('correct','wrong');
+      el.classList.add(isRight ? 'correct' : 'wrong');
+    });
+
+    const statusEl = document.getElementById('status-' + w.key);
+    statusEl.textContent = wordCorrect ? '✓' : '✗';
+    statusEl.className = 'clue-status ' + (wordCorrect ? 'ok' : 'no');
+    if(wordCorrect) correctWords++;
+  });
+
+  if(correctWords === words.length){
+    resultLine.textContent = '';
+    setTimeout(()=>{
+      document.getElementById('completeScreen').classList.add('show');
+    }, 350);
+  } else {
+    resultLine.textContent = `${words.length}개 중 ${correctWords}개 정답이에요. 빨간 칸을 다시 확인해보세요.`;
+  }
+}
+
+document.getElementById('submitBtn').addEventListener('click', checkAnswers);
+
+/* ---------- Reset ---------- */
+function resetAll(){
+  gridEl.querySelectorAll('input').forEach(el=>{
+    el.value = '';
+    el.classList.remove('correct','wrong');
+  });
+  words.forEach(w=>{
+    const statusEl = document.getElementById('status-' + w.key);
+    statusEl.textContent = '';
+    statusEl.className = 'clue-status';
+  });
+  resultLine.textContent = '';
+  document.getElementById('completeScreen').classList.remove('show');
+}
+
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+document.getElementById('restartBtn').addEventListener('click', resetAll);
+</script>
+</body>
+</html>
